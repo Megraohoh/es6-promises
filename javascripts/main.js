@@ -3,6 +3,10 @@
 // ES6-ify it all! (no more var; replaced by 'let' and 'const')
 	//let gets changed through the code (ex. domString)
 	//const never changes (ex. outputContainer)
+	//FAT ARROW
+		//when writing functions on the same line, no curlies needed.
+
+
 
 $(document).ready(function(){
 
@@ -31,58 +35,42 @@ $(document).ready(function(){
   		    outputContainer.append(domString);
 		};
 
-    const loadHumans = function () {
-        return new Promise(function(resolve, reject) {
-            $.ajax("./database/humans.json")
-            .done(function(data1){
-                resolve(data1.humans);
-            })
-            .fail(function(error){
-                reject(error);
-            });
-        });
+    const loadHumans = () => {
+    	return new Promise((resolve, reject) => {
+    		$.ajax("./database/humans.json")
+    		.done((data) => resolve(data.humans))
+    		.fail((error) => reject(error));
+    	});
     };
 
-    const loadDogs = function () {
-        return new Promise(function(resolve, reject) {
-            $.ajax("./database/dogs.json")
-            .done(function(data1){
-                resolve(data1.dogs);
-            })
-            .fail(function(error){
-                reject(error);
-            });
-        });
+    const loadDogs = () => {
+    	return new Promise((resolve, reject) => {
+    		$.ajax("./database/dogs.json")
+    		.done((data1) => resolve(data1.dogs))
+    		.fail((error) => reject(error));
+    	});
     };
 
-    const loadCats = function () {
-        return new Promise(function(resolve, reject) {
-            $.ajax("./database/cats.json")
-            .done(function(data1){
-                resolve(data1.cats);
-            })
-            .fail(function(error){
-                reject(error);
-            });
-        });
+    const loadCats = () => {
+    	return new Promise((resolve, reject) => {
+    		$.ajax("./database/cats.json")
+    		.done((data1) => resolve(data1.cats))
+    		.fail((error) => reject(error));
+    	});
     };
 
-    const loadDinos = function () {
-        return new Promise(function(resolve, reject) {
-            $.ajax("./database/dinos.json")
-            .done(function(data1){
-                resolve(data1.dinos);
-            })
-            .fail(function(error){
-                reject(error);
-            });
-        });
+    const loadDinos = () => {
+    	return new Promise((resolve, reject) => {
+    		$.ajax("./database/dinos.json")
+    		.done((data1) => resolve(data1.dinos))
+    		.fail((error) => reject(error));
+    	});
     };
 
     const myHumans = []; //always an array, only changing the objects in the array
     const myAnimals = [];
 
-    const checkForTypeMatch = function(human, pet){
+    const checkForTypeMatch = ((human, pet) => {
     	const interestedInArray = human["interested-in"];
     	const isMatchNumber = interestedInArray.indexOf(pet.type);
     	if (isMatchNumber === -1) {
@@ -90,9 +78,9 @@ $(document).ready(function(){
     	} else {
     		return true;
     	}
-    };
+    });
 
-    const checkForKidFriendly = function(human, pet){
+    const checkForKidFriendly = ((human, pet) => {
     	const hasKids = human["has-kids"];
     	const isKidFriendly = pet["kid-friendly"];
     	let isMatched = true;
@@ -100,17 +88,17 @@ $(document).ready(function(){
     		isMatched = false;
     	}
     	return isMatched;
-    };
+    });
 
-	    loadHumans().then(function(humans){ //for the array reference
-	        humans.forEach(function(human){ //one instance for the foreach
+	    loadHumans().then((humans) => { //for the array reference
+	        humans.forEach((human) => { //one instance for the foreach
 	        	human.matches = [];
 	            myHumans.push(human);
 	        });
 	            Promise.all([loadDogs(), loadCats(), loadDinos()])
-	    		.then(function(result){
-	    			result.forEach(function(xhrCall){
-	    				xhrCall.forEach(function(animal){
+	    		.then((result) => {
+	    			result.forEach((xhrCall) => {
+	    				xhrCall.forEach((animal) => {
 	    					myAnimals.push(animal);
 	    		});
 	    	});
@@ -125,12 +113,12 @@ $(document).ready(function(){
     			}
     		writeToDOM(myHumans);	
 	    }) //no semicolon needed since the method catch is chaining to the for loops
-	    		.catch(function(errors){
+	    		.catch((errors) => {
 	    			console.log(errors);
 	    		});
 	   	
     }) //catch method needs to be at the same level as .then,,end of writing promise
-	.catch(function(humanError){
+	.catch((humanError) => {
 		console.log(humanError);
 	});    
 
