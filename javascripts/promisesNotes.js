@@ -1,16 +1,13 @@
 // Use AJAX | Promises to load all 3 JSON files
 // Iterate over all JSON files and match the human with their appropriate pet(s)
-// ES6-ify it all! (no more var; replaced by 'let' and 'const')
-	//let gets changed through the code (ex. domString)
-	//const never changes (ex. outputContainer)
 
 $(document).ready(function(){
 
-	const outputContainer = $("#output");
+	var outputContainer = $("#output");
 
-		const writeToDOM = function (humanArray) {
-		  	let domString = "";
-		  	for (let i = 0; i < humanArray.length; i++) {
+		var writeToDOM = function (humanArray) {
+		  	var domString = "";
+		  	for (var i = 0; i < humanArray.length; i++) {
 			    domString += `<div class="human row">`;
 			    domString += `<div class="col-sm-4">`;
 			    domString += `<img src="${humanArray[i].image}">`;
@@ -18,7 +15,7 @@ $(document).ready(function(){
 			    domString += `</div>`;
 			    domString += `<div class="col-sm-8 overflow-row">`;
 
-		    	for (let j = 0; j < humanArray[i].matches.length; j++){
+		    	for (var j = 0; j < humanArray[i].matches.length; j++){
 			      domString += `<div class="animal">`;
 			      domString += `<img src="${humanArray[i].matches[j].image}">`;
 			      domString += `<p>${humanArray[i].matches[j].name}</p>`;
@@ -31,7 +28,7 @@ $(document).ready(function(){
   		    outputContainer.append(domString);
 		};
 
-    const loadHumans = function () {
+    var loadHumans = function () {
         return new Promise(function(resolve, reject) {
             $.ajax("./database/humans.json")
             .done(function(data1){
@@ -43,7 +40,7 @@ $(document).ready(function(){
         });
     };
 
-    const loadDogs = function () {
+    var loadDogs = function () {
         return new Promise(function(resolve, reject) {
             $.ajax("./database/dogs.json")
             .done(function(data1){
@@ -55,7 +52,7 @@ $(document).ready(function(){
         });
     };
 
-    const loadCats = function () {
+    var loadCats = function () {
         return new Promise(function(resolve, reject) {
             $.ajax("./database/cats.json")
             .done(function(data1){
@@ -67,7 +64,7 @@ $(document).ready(function(){
         });
     };
 
-    const loadDinos = function () {
+    var loadDinos = function () {
         return new Promise(function(resolve, reject) {
             $.ajax("./database/dinos.json")
             .done(function(data1){
@@ -79,12 +76,12 @@ $(document).ready(function(){
         });
     };
 
-    const myHumans = []; //always an array, only changing the objects in the array
-    const myAnimals = [];
+    var myHumans = [];
+    var myAnimals = [];
 
-    const checkForTypeMatch = function(human, pet){
-    	const interestedInArray = human["interested-in"];
-    	const isMatchNumber = interestedInArray.indexOf(pet.type);
+    var checkForTypeMatch = function(human, pet){
+    	var interestedInArray = human["interested-in"];
+    	var isMatchNumber = interestedInArray.indexOf(pet.type);
     	if (isMatchNumber === -1) {
     		return false;
     	} else {
@@ -92,10 +89,10 @@ $(document).ready(function(){
     	}
     };
 
-    const checkForKidFriendly = function(human, pet){
-    	const hasKids = human["has-kids"];
-    	const isKidFriendly = pet["kid-friendly"];
-    	let isMatched = true;
+    var checkForKidFriendly = function(human, pet){
+    	var hasKids = human["has-kids"];
+    	var isKidFriendly = pet["kid-friendly"];
+    	var isMatched = true;
     	if (hasKids && !isKidFriendly){  // ! means not
     		isMatched = false;
     	}
@@ -115,8 +112,8 @@ $(document).ready(function(){
 	    		});
 	    	});
 	        // console.log("myHumans", myHumans);
-    			for (let i = 0; i < myHumans.length; i++){
-    				for (let j = 0; j < myAnimals.length; j++) {
+    			for (var i = 0; i < myHumans.length; i++){
+    				for (var j = 0; j < myAnimals.length; j++) {
     					// console.log("myHumans", myHumans[i]);
     					if (checkForTypeMatch(myHumans[i], myAnimals[j]) && checkForKidFriendly(myHumans[i], myAnimals[j])) {
     						myHumans[i].matches.push(myAnimals[j]);
