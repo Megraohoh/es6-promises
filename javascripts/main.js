@@ -127,7 +127,7 @@ $(document).ready(function(){
 	    			console.log(errors);
 	    		});
 	   	
-    })
+    }) //catch method needs to be at the same level as .then,,end of writing promise
 	.catch(function(humanError){
 		console.log(humanError);
 	});    
